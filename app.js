@@ -1,15 +1,14 @@
 var app = angular.module('app',['MyTimeAgoModule']).
   config(function($routeProvider) {
     $routeProvider.
-      when('/', {controller:MainCtrl, templateUrl:'main.html'}).
-      when('/play', {controller:PlayCtrl, templateUrl:'play.html'}).
+      when('/', {controller:MainCtrl, templateUrl:'sltr/pages/main_html'}).
+      when('/play', {controller:PlayCtrl, templateUrl:'sltr/pages/play_html'}).
       otherwise({redirectTo:'/'});
   });
  
 app.config(function($compileProvider){
   $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 });
-
 
 
 /**
@@ -74,14 +73,13 @@ function MainCtrl($scope, $location, $routeParams) {
 /**
  * 
  */
-function PlayCtrl($scope, $location, $routeParams, $rootScope) {
+function PlayCtrl($scope, $location, $routeParams, $rootScope,$timeout) {
 
   $scope.ctrl = {}
   $scope.ctrl.stockVisibleCard = false //at beginning, no card  visible
   $scope.ctrl.selectedArray = false
   //$scope.ctrl.symbols = ['♠','♥','♣','♦']
   $scope.ctrl.symbols = ['&spades;','&hearts;','&diams;','&clubs;']
-  
   $scope.ctrl.values = ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
   
   $scope.stock = []
@@ -90,6 +88,8 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
   $scope.foundation = []
   $scope.game = {}
   
+  var noAutoMove = false //switch to prevent autoMove after autoPlay stopped
+
   
   //initialize all scope values newly
   var initScope = function(){
@@ -184,8 +184,11 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
       $scope.stock.cards.push(card)
       $scope.game.moves +=1 
       $scope.autoPlay()
+      $scope.ctrl.selectedArray = $scope.stock
+      $scope.ctrl.highlighted = 'stock'    
     }
   }
+
 
   //Handles any click on a deck
   $scope.selectDeck = function(obj,name){
@@ -201,16 +204,22 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
   }
 
 
-  /**
-   * Knows two 
-   */
 
-  $scope.$watch('ctrl.selectedArray',function(newVal,oldVal){
+
+  /**
+   * Executes a move between two decks, if possible
+   */
+  var checkMove = function(newVal,oldVal){
     //console.log('ctrl.selectedArray',newVal,oldVal)
     var moveAllowed = false 
     var moveCardsAmount = 1
     var disableSelect = false
     var doAutoPlay = true
+    if (noAutoMove){
+      noAutoMove = false
+      doAutoPlay = false
+    }
+
     if (newVal && oldVal){
       var newTopCard = newVal.cards.slice(-1)[0]
       var oldTopCard = oldVal.cards.slice(-1)[0]
@@ -297,7 +306,7 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
       }
 
     }
-  })
+  }
 
   /**
    * If tableau empty and tableauStock filled, move cards
@@ -312,9 +321,9 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
   }
 
   /**
-   * AutoPlay - fills foundation automagically from tableau and stock
+   * autoPlayMove - fills foundation automagically from tableau and stock
    */
-  var autoPlay = function(){
+  var autoPlayMove = function(){
     var moved = false
     //check all sources
     var sources = [$scope.stock]
@@ -363,6 +372,7 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
                   //if yes, moveAllowed = false
                   if (topCard.value+1 == possibleTargetTopCard.value && topCard.symbol%2 !=  possibleTargetTopCard.symbol%2){
                     moveAllowed = false
+                    noAutoMove = true  
                     console.log('autoPlay:stopped, because two moves possible')
                   }
                 }
@@ -375,12 +385,14 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
               //auto move do not count
               moved = true 
               if (source.type == 'tableau') fillTableau() 
+              $timeout(autoPlayMove,150) //try another card play
               return true  
             }
           } //end same symbols
         } //end for
       }
     }
+    checkGame()
     return moved
   }
 
@@ -389,8 +401,7 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
    *
    */
   $scope.autoPlay = function(){
-    while (autoPlay()){}
-    checkGame()
+    autoPlayMove()
   }
 
   /**
@@ -423,6 +434,15 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
     }
   }
 
+
+
+  /**
+   * WATCHES
+   */
+  /**
+   * Watch selected Array to determine if a move is being made
+   */
+  $scope.$watch('ctrl.selectedArray',checkMove)
 
   /**
    * UI FUNCTIONS
