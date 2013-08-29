@@ -1,0 +1,31 @@
+CACHE MANIFEST
+
+#version 1.0 8-29-2013
+
+CACHE:
+
+#images
+http://federicoelles.github.io/SLTR/img/icons/sltr-16.png
+http://federicoelles.github.io/SLTR/img/icons/sltr-48.png
+http://federicoelles.github.io/SLTR/img/icons/sltr-256.png
+http://federicoelles.github.io/SLTR/img/icons/sltr-128.png
+http://federicoelles.github.io/SLTR/img/icons/sltr-60.png
+
+#internal HTML documents
+http://federicoelles.github.io/SLTR/index.html
+http://federicoelles.github.io/SLTR/main.html
+http://federicoelles.github.io/SLTR/play.html
+
+#style sheets
+http://federicoelles.github.io/SLTR/style.css
+
+#style sheet images
+
+
+#javascript files
+http://federicoelles.github.io/SLTR/angular.min.js
+http://federicoelles.github.io/SLTR/js.js
+http://federicoelles.github.io/SLTR/app.js
+
+NETWORK:
+*
