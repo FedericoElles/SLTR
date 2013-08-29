@@ -1,0 +1,125 @@
+  
+<p class="header">
+<span class="title">SLTR</span>
+<a href="" ng-click="demo()">New</a> 
+<a href="#/" class="right">Exit</a> 
+
+</p>
+
+
+<table ng-show="!game.won">
+  <tr class=tr-spacer>
+  </tr>
+  <tr>
+    <!--<td>
+      <div ng-show="stock.cards.length>1" 
+          class="link card" ng-click="newStockCard();ctrl.selectedArray=stock;ctrl.highlighted='stock'">
+        <span class="small">Next<br>card</span>
+      </div>
+    </td>-->
+    <td>
+      <div ng-show="ctrl.stockVisibleCard" ng-class="{'highlight':ctrl.highlighted=='stock'}"
+        id="deck-stock" ng-click="selectDeck(stock,'stock')" 
+        class="card {{uiGetCardColor(stock)}}" 
+        ng-bind-html-unsafe="uiGetCard(stock)">
+      </div>
+      <div class="card" ng-show="!ctrl.stockVisibleCard">?
+      </div>
+    </td> 
+    <td>
+      <div ng-show="stock.cards.length>0" class="counter counterStock">
+        {{stock.cards.length}}
+      </div>
+    </td>
+    <td>
+    </td>
+    <td ng-repeat="found in foundation">
+      <div ng-click="selectDeck(found,'foundation'+$index)"
+          ng-class="{'highlight':ctrl.highlighted=='foundation'+$index}" 
+          class="card {{uiGetCardColor(found)}}">
+        <span ng-show="found.cards.length==0">A<br>{{ctrl.symbols[$index]}}</span>
+        <span ng-show="found.cards.length>0" ng-bind-html-unsafe="uiGetCard(found)"></span
+      </div>
+    </td>
+  </tr>
+  <tr class=tr-spacer>
+  </tr>
+  <tr>
+    <td ng-repeat="tabStock in tableauStock">
+      <div class="counter" ng-show="tabStock.cards.length>0">
+        {{tabStock.cards.length}}
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td ng-repeat="tab in tableau" >
+      <div ng-class="{'divHighlight':ctrl.highlighted=='tableau'+$index}" ng-click="selectDeck(tab,'tableau'+$index)">
+        <div>
+          <div ng-repeat="card in tab.cards" ng-show="!$last">
+            <div class="tinyCard {{uiGetCardColor(card)}}">
+              {{transSymbol(card.symbol)}} {{transValue(card.value)}}
+            </div>
+          </div>
+        </div>
+
+        <div 
+          class="card {{uiGetCardColor(tab)}}">
+          <span ng-show="tab.cards.length>0" ng-bind-html-unsafe="uiGetCard(tab)"></span>
+          <span ng-show="tab.cards.length==0">K</span>
+        </div>
+      </div> 
+    </td>
+</table>
+
+<div class="div_won" ng-show="game.won">
+ <h1>WIN</h1>
+  <p>
+    <span class=title>Moves&nbsp;</span>
+    <span class=value>{{game.moves}}
+      <span ng-show="game.moves-player.stats.bestMoves!=0" class=diff ng-class="{'red':game.moves-player.stats.bestMoves>0,'green':game.moves-player.stats.bestMoves<0}">
+        <span ng-show="game.moves-player.stats.bestMoves>0">+</span>{{game.moves-player.stats.bestMoves}}
+      </span> 
+      <span ng-show="game.moves-player.stats.bestMoves==0" class=green>
+        best
+      </span>
+    </span>
+  </p>
+  <p>
+    <span class=title>Time&nbsp;</span>
+    <span class=value>{{game.seconds|time}}
+      <span ng-show="game.seconds-player.stats.bestTime!=0" class=diff ng-class="{'red':game.seconds-player.stats.bestTime>0,'green':game.seconds-player.stats.bestTime<0}">
+        <span ng-show="game.seconds-player.stats.bestTime>0">+</span>{{game.seconds-player.stats.bestTime|time}}
+      </span> 
+      <span ng-show="game.seconds-player.stats.bestTime==0" class=green>
+        best
+      </span>
+    </span>
+  </p>
+  <p>
+    <a href="#/">Exit</a> 
+  </p>
+  <p>
+    <a href="" ng-click="demo()">New</a>     
+  </p>
+</div>
+
+<div id="footer" ng-show="!game.won">
+  <div  ng-show="stock.cards.length>1" id=nextCard ng-click="newStockCard();ctrl.selectedArray=stock;ctrl.highlighted='stock'">
+    Next card
+  </div>
+
+<!--
+  <hr>
+  Debug: 
+  <button ng-click="instantWin()">Instant Win</button>
+-->
+</div>
+
+<div ng-show="game.moves==0">
+ <p class="stats center">
+   <strong>Hints:</strong> Tap card to select it.<br>
+   Tap target deck to move card if possible.<br>
+   Obvious moves are done automatically.<br>
+   Think fast.
+ </p>
+</div>

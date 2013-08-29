@@ -1,0 +1,39 @@
+<p class="header">
+  <span class="title">SLTR</span>
+  <span class="sub">Solitaire on speed.</span>
+</p>
+
+<div class=content> 
+
+  <p class=center>
+    <a class=btn href="#/play"></i>New game</a>
+  </p>
+
+  <p class=center ng-show="!ctrl.showHelp">
+    <a class=btn ng-click="ctrl.showHelp=true" href=""></i>Help</a>
+  </p>
+
+  <div ng-show="ctrl.showHelp">
+    <h4>Help</h4>
+    <ul>
+      <li>You play Klondike Solitaire, one turn mode, on speed</li>
+      <li>Obvious moves are done automatically</li>
+      <li>Click on a card to select it</li>
+      <li>If a card is selected, click on the target deck to move card if possible</li>
+      <li>Moving multiple cards is done automatically</li>
+      <li>Drag and drop is not supported</li>
+    </ul>
+    <p class=center>
+      <a class="btn" ng-click="ctrl.showHelp=false" href=""></i>Close</a>
+    </p>
+  </div>
+
+
+  <p class="center stats">
+    <span>Won {{player.stats.win}} of  {{player.stats.games}}</span><br>
+    <span>Best time: {{player.stats.bestTime|time}}</span><br>
+    <span>Least moves: {{player.stats.bestMoves}}</span><br>
+    <span class=smallStats>Version 1.0 - 27.06.2013</span>
+    <!--<span class=smallStats>#{{player.id}}</span><br>-->
+  </p>
+</div>
