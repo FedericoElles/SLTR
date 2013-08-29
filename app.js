@@ -1,5 +1,4 @@
 
-
 var app = angular.module('app',['MyTimeAgoModule']).
   config(function($routeProvider) {
     $routeProvider.
@@ -81,7 +80,7 @@ function PlayCtrl($scope, $location, $routeParams, $rootScope) {
   $scope.ctrl = {}
   $scope.ctrl.stockVisibleCard = false //at beginning, no card  visible
   $scope.ctrl.selectedArray = false
-  $scope.ctrl.symbols = ['� ','♥','♣','♦']
+  $scope.ctrl.symbols = ['♠','♥','♣','♦']
   $scope.ctrl.values = ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
   
   $scope.stock = []
