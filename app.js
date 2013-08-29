@@ -1,8 +1,8 @@
 var app = angular.module('app',['MyTimeAgoModule']).
   config(function($routeProvider) {
     $routeProvider.
-      when('/', {controller:MainCtrl, templateUrl:'sltr/pages/main_html'}).
-      when('/play', {controller:PlayCtrl, templateUrl:'sltr/pages/play_html'}).
+      when('/', {controller:MainCtrl, templateUrl:'main.html'}).
+      when('/play', {controller:PlayCtrl, templateUrl:'/play.html'}).
       otherwise({redirectTo:'/'});
   });
  
