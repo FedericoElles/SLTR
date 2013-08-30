@@ -1,9 +1,8 @@
   
 <p class="header">
+<a href="" class=left ng-click="demo()">New</a>
 <span class="title">SLTR</span>
-<a href="" ng-click="demo()">New</a> 
-<a href="#/" class="right">Exit</a> 
-
+<a href="#/" class="right">Exit</a>
 </p>
 
 
@@ -11,12 +10,6 @@
   <tr class=tr-spacer>
   </tr>
   <tr>
-    <!--<td>
-      <div ng-show="stock.cards.length>1" 
-          class="link card" ng-click="newStockCard();ctrl.selectedArray=stock;ctrl.highlighted='stock'">
-        <span class="small">Next<br>card</span>
-      </div>
-    </td>-->
     <td>
       <div ng-show="ctrl.stockVisibleCard" ng-class="{'highlight':ctrl.highlighted=='stock'}"
         id="deck-stock" ng-click="selectDeck(stock,'stock')" 
@@ -37,7 +30,7 @@
       <div ng-click="selectDeck(found,'foundation'+$index)"
           ng-class="{'highlight':ctrl.highlighted=='foundation'+$index}" 
           class="card {{uiGetCardColor(found)}}">
-        <span ng-show="found.cards.length==0">A<br>{{ctrl.symbols[$index]}}</span>
+        <span ng-show="found.cards.length==0" ng-bind-html-unsafe="'A<br>'+ctrl.symbols[$index]"></span>
         <span ng-show="found.cards.length>0" ng-bind-html-unsafe="uiGetCard(found)"></span
       </div>
     </td>
@@ -56,8 +49,7 @@
       <div ng-class="{'divHighlight':ctrl.highlighted=='tableau'+$index}" ng-click="selectDeck(tab,'tableau'+$index)">
         <div>
           <div ng-repeat="card in tab.cards" ng-show="!$last">
-            <div class="tinyCard {{uiGetCardColor(card)}}">
-              {{transSymbol(card.symbol)}} {{transValue(card.value)}}
+            <div class="tinyCard {{uiGetCardColor(card)}}" ng-bind-html-unsafe="transSymbol(card.symbol)+''+transValue(card.value)">
             </div>
           </div>
         </div>
@@ -104,7 +96,7 @@
 </div>
 
 <div id="footer" ng-show="!game.won">
-  <div  ng-show="stock.cards.length>1" id=nextCard ng-click="newStockCard();ctrl.selectedArray=stock;ctrl.highlighted='stock'">
+  <div  ng-show="stock.cards.length>1" id=nextCard ng-click="newStockCard();">
     Next card
   </div>
 
