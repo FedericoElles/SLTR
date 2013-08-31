@@ -1,0 +1,22 @@
+{
+    "version": "1.2.5",
+    "name": "SLTR",
+    "description": "Minimalist Klondike Solitaire on speed.",
+    "launch_path": "/index.html",
+    "appcache_path": "/app.manifest",
+    "icons": {
+        "16":  "img/icons/sltr-16.png",
+        "48":  "img/icons/sltr-48.png",
+        "128": "img/icons/sltr-128.png",
+        "60":  "img/icons/sltr-60.png",
+        "256": "img/icons/sltr-256.png"        
+    },
+    "developer": {
+        "name": "Federico Elles",
+        "url": "https://github.com/FedericoElles"
+    },
+    "installs_allowed_from": ["*"],
+    "locales": {},
+    "default_locale": "en",  
+    "permissions": {}
+}
