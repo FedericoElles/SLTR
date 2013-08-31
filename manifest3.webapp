@@ -2,8 +2,8 @@
     "version": "1.2.5",
     "name": "SLTR",
     "description": "Minimalist Klondike Solitaire on speed.",
-    "launch_path": "/index.html",
-    "appcache_path": "/app.manifest",
+    "launch_path": "/SLTR/index.html",
+    "appcache_path": "/SLTR/app.manifest",
     "icons": {
         "16":  "/SLTR/img/icons/sltr-16.png",
         "48":  "/SLTR/img/icons/sltr-48.png",
